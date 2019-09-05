@@ -15,11 +15,15 @@ const listarUsuarios = async (req, res) => {
 
 const login = (req, res) => {
     autenticacion(req.body).then((usuario) => {
-        if (!usuario) res.send(404).json({ message: "Usuario no encontrado" });
+        //sig linea no funciona
+        //if (!usuario) res.status(404).json({ message: "Usuario no encontrado" });
         const token = crearToken(usuario);
-        res.status(200).json({ token });
+        res.status(200).json({
+            token,
+            message: "Autenticacion exitosa"
+        });
     }).catch(e => {
-        res.status(400).json(e)
+        res.status(400).json({ message: "Autenticacion erronea" });
     })
 }
 
