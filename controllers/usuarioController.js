@@ -5,7 +5,7 @@ const crearToken = require('../middlewares/generartoken');
 const crearUsuario = async (req, res) => {
     const usuario = await usuariosModel.create(req.body)
         .catch(e => res.status(400).json(e));
-    res.status(201).json(usuario);
+    res.render('usuarioCreado');
 }
 
 const listarUsuarios = async (req, res) => {
@@ -18,12 +18,14 @@ const login = (req, res) => {
         //sig linea no funciona
         //if (!usuario) res.status(404).json({ message: "Usuario no encontrado" });
         const token = crearToken(usuario);
-        res.status(200).json({
-            token,
-            message: "Autenticacion exitosa"
-        });
+        // res.status(200).json({
+        //     token,
+        //     message: "Autenticacion exitosa"
+        // });
+        res.render('logeado');
     }).catch(e => {
-        res.status(400).json({ message: "Autenticacion erronea" });
+        // res.status(400).json({ message: "Autenticacion erronea" });
+        res.send('Autenticacion erronea');
     })
 }
 

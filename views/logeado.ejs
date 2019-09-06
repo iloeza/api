@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <% include partials/head %>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ya estas loggeado</h1>
+        <hr>
+        <h2>Quieres crear un usuario? llena este formulario</h2>
+        <div class="container">
+            <form action="/api/usuarios/crearUser" method="POST" class="mt-5">
+                <% include partials/form %>
+                <div class="form-group">
+                    <label for="rol">Rol de usuario</label>
+                    <input type="text" class="form-control" id="rol" name="rol"
+                        placeholder="Ingresa el rol del usuario nuevo">
+                </div>
+                <button type="submit" class="btn btn-primary">Crear usuario</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
