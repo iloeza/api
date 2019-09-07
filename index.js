@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.render('index');
 })
 
