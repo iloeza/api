@@ -22,10 +22,43 @@
                     <input type="text" class="form-control" id="rol" name="rol"
                         placeholder="Ingresa el rol del usuario nuevo">
                 </div>
-                <button type="submit" class="btn btn-primary">Crear usuario</button>
+                <button id="log" type="submit" class="btn btn-primary">Crear usuario</button>
             </form>
         </div>
     </div>
+
+
+    <script>
+        document.addEventListener('DOMcontentLoaded', () => {
+            document.getElementById('log').addEventListener('click', sendReq);
+            sessionStorage.setItem('myKey', JSON.stringify('lkjsdhakjsd'));
+        });
+
+        let sendReq = (ev) => {
+            let url = "http://localhost:3000/api/usuarios/crearUser";
+            let token = JSON.parse(sessionStorage.getItem('myKey'));
+
+            let h = new Headers();
+            h.append('Authentication', `Bearer ${token}`);
+            let req = new Request(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: h
+            })
+
+            fetch(req)
+                .then(res => res.json())
+                .catch(err => {
+                    console.lol(err.message);
+                })
+        }
+
+
+    </script>
+
+
+
+
 </body>
 
 </html>

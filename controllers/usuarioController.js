@@ -16,15 +16,12 @@ const listarUsuarios = async (req, res) => {
 const login = (req, res) => {
     autenticacion(req.body).then((usuario) => {
         const token = crearToken(usuario);
+        res.render('logeado');
         // res.status(200).json({
         //     token,
         //     message: "Autenticacion exitosa"
-        res.header("authToken", token);
-        res.render('logeado');
-        
         // });
     }).catch(e => {
-        // res.status(400).json({ message: "Autenticacion erronea" });
         res.send('Autenticacion erronea');
     })
 }
