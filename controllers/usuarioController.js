@@ -3,9 +3,10 @@ const autenticacion = require('../middlewares/autenticacion');
 const crearToken = require('../middlewares/generartoken');
 
 const crearUsuario = async (req, res) => {
-    const usuario = await usuariosModel.create(req.body)
-        .catch(e => res.status(400).json(e));
-    res.render('usuarioCreado');
+    const usuario = await usuariosModel.create(req.body);
+        if (usuario) res.status(200).json({message: "exito"});
+        //.catch(e => res.status(400).json(e));
+    //res.render('usuarioCreado');
 }
 
 const listarUsuarios = async (req, res) => {
@@ -13,21 +14,28 @@ const listarUsuarios = async (req, res) => {
     res.status(200).json(usuarios);
 }
 
+const updateUsuario = async (req, res) =>{
+    const query = req.body.usuario;
+    const usuario = await usuariosModel.findOneAndUpdate({usuario: query},{...req.body},{new:true}).catch(e => res.status(400).json(e));
+    if(!usuario) res.status(404).json({message:"Author not found"});
+    res.status(200).json({message: "exito"});
+}
+
 const login = (req, res) => {
     autenticacion(req.body).then((usuario) => {
         const token = crearToken(usuario);
-        res.render('logeado');
-        // res.status(200).json({
-        //     token,
-        //     message: "Autenticacion exitosa"
-        // });
+        res.status(200).json({
+            token,
+            message: "Autenticacion exitosa"
+        });
     }).catch(e => {
-        res.send('Autenticacion erronea');
+        res.status(400).json({ 'message': 'error' });
     })
 }
 
 module.exports = {
     crearUsuario,
     listarUsuarios,
+    updateUsuario,
     login
 }

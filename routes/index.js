@@ -1,11 +1,11 @@
 const express = require('express');
-const privilegio = require('../middlewares/privilegios');
+const verifyToken = require('../middlewares/verifyToken');
 const router = express.Router();
 
 const {crearUsuario, listarUsuarios, login} = require ('../controllers/usuarioController');
 
-router.post('/usuarios/crearUser', crearUsuario);
+router.post('/usuarios/crearUser', [verifyToken], crearUsuario);
 router.post('/usuarios/', login);
-router.get('/usuarios', listarUsuarios);
+router.get('/usuarios', [verifyToken],  listarUsuarios);
 
 module.exports = router;

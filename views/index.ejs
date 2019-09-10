@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-        <form action="/api/usuarios/" method="POST" class= "mt-5">
+        <form id="loginForm" class="mt-5">
             <div class="form-group">
                 <label for="usuario">Nombre de usuario</label>
                 <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp"
@@ -29,5 +29,42 @@
 
 
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+    function payload (token) {
+        var baseUri = token.split('.')[1];
+        var base64 = baseUri.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    }
+
+
+    $('#loginForm').submit( function(event){
+        event.preventDefault();
+        var data = {
+            usuario: $('#usuario').val(),
+            password: $('#password').val()
+        }
+
+        $.ajax({
+            
+            url: '/api/usuarios/',
+            method: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                localStorage.setItem('myToken', data.token);
+                var rol = payload(data.token).rol;
+                if (rol == 'admin') {window.location = '/admin'}
+                if (rol == 'user') {window.location = '/usuario'}
+
+            },
+            error: function(error){
+                console.log(error)
+            },
+            data: JSON.stringify(data)
+        })
+    })
+</script>
 
 </html>

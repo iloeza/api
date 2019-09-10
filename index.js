@@ -18,10 +18,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
 })
 
+app.get('/usuario', (req, res) =>{
+    res.render('logeado');
+})
+
+app.get('/admin', (req, res) =>{
+    res.render('adminOptns');
+})
+
+app.get('/crearUser', (req, res) =>{
+    res.render('crearUsuario');
+})
+
+app.get('/Creado', (req, res) =>{
+    res.render('usuarioCreado');
+})
 
 //iniciar db
 mongoose.connect('mongodb://localhost:27017/usuarios', { useNewUrlParser: true })
