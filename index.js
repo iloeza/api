@@ -47,6 +47,16 @@ app.get('/Creado', (req, res) =>{
     res.render('usuarioCreado');
 })
 
+//Eliminar usuarios
+app.get('/eliminarUser', (req, res) =>{
+    res.render('eliminarUsuario');
+})
+app.get('/Eliminado', (req, res) =>{
+    res.render('Eliminado');
+})
+
+
+
 //iniciar db
 mongoose.connect('mongodb://localhost:27017/usuarios', { useNewUrlParser: true })
     .then(() => console.log("Conectado a MongoDB 🚀"))

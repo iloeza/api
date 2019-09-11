@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <% include partials/head %>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <form id="modifyForm" class="mt-5">
+            <div class="form-group">
+                <label for="usuario">Nombre de usuario</label>
+                <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp"
+                    placeholder="Nombre de usuario a eliminar">
+            </div>
+            <button id="log" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        $('#modifyForm').submit(function (event) {
+            event.preventDefault();
+            var data = {
+                usuario: $('#usuario').val(),
+            }
+            $.ajax({
+                url: '/api/usuarios/eliminarUser',
+                method: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                headers: {
+                    Authorization: "JWT " + localStorage.getItem('myToken')
+                },
+                success: function () {
+                    window.location = '/Eliminado'
+                },
+                error: function (error) {
+                    console.log(error)
+                },
+                data: JSON.stringify(data)
+            })
+        })
+    </script>
+</body>
+
+</html>
