@@ -1,6 +1,7 @@
 const usuariosModel = require('../models/usuarios');
 const autenticacion = require('../middlewares/autenticacion');
 const crearToken = require('../middlewares/generartoken');
+const encriptar = require('../middlewares/encriptar');
 
 const crearUsuario = async (req, res) => {
     const usuario = await usuariosModel.create(req.body);
@@ -16,7 +17,12 @@ const listarUsuarios = async (req, res) => {
 
 const updateUsuario = async (req, res) =>{
     const query = req.body.usuario;
-    const usuario = await usuariosModel.findOneAndUpdate({usuario: query},{...req.body},{new:true}).catch(e => res.status(400).json(e));
+    let nwPwd = encriptar(req);
+    const usuario = await usuariosModel.findOneAndUpdate({usuario: query},{
+        usuario: req.body.usuario,
+        password: nwPwd,
+        rol: req.body.rol
+    },{new:true}).catch(e => res.status(400).json(e));
     if(!usuario) res.status(404).json({message:"Author not found"});
     res.status(200).json({message: "exito"});
 }

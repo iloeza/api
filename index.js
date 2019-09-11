@@ -29,7 +29,16 @@ app.get('/usuario', (req, res) =>{
 app.get('/admin', (req, res) =>{
     res.render('adminOptns');
 })
+//Actualizar usuarios
+app.get('/updateUser', (req, res) =>{
+    res.render('updateUsuario');
+})
 
+app.get('/Modificado', (req, res) =>{
+    res.render('Modificado');
+})
+
+//Crear usuarios
 app.get('/crearUser', (req, res) =>{
     res.render('crearUsuario');
 })
