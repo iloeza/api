@@ -33,6 +33,7 @@ const updateUsuario = async (req, res) => {
 }
 
 const login = (req, res) => {
+    console.log(req.body)
     autenticacion(req.body).then((usuario) => {
         const token = crearToken(usuario);
         res.status(200).json({
